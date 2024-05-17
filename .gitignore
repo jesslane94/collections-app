@@ -66,4 +66,4 @@ collections/node_modules/
 .env
 
 #config files
-collections\src\config
+collections\collections\src\config\firebase-config.js

@@ -8,13 +8,11 @@ import "./styles.css";
 import { useAddItem } from '../../hooks/useAddItem';
 import { useGetItems } from '../../hooks/useGetItems';
 import { useGetUserID } from '../../hooks/useGetUserID';
-// import { useAddToStorage } from '../../hooks/useAddToStorage';
 
 export const Collections = () => {
     const { addItem } = useAddItem();
     const { items, totalItems } = useGetItems();
     const { name, profilePhoto, userID } = useGetUserID();
-    // const { progress, url } = useAddToStorage(file);
     const navigate = useNavigate();
 
     const [file, setFile] = useState(null);
