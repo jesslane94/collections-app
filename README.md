@@ -1,2 +1,4 @@
-## to activate
-env/Scripts/Activate.ps1
+## a web app for keeping track of your collection!
+
+## to start
+npm start   

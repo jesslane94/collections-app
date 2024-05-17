@@ -64,3 +64,6 @@ collections/node_modules/
 
 # dotenv environment variables file
 .env
+
+#config files
+collections\src\config
