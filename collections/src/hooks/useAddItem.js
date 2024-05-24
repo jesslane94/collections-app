@@ -1,6 +1,6 @@
 // @flow
 
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, updateDoc, collection, serverTimestamp, doc } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 import { useGetUserID } from './useGetUserID';
 import { storage } from "../config/firebase-config";
@@ -36,7 +36,8 @@ export const useAddItem = (): any => {
         dateAcquired,
         inCollection,
     }: Props) => {
-        const storageRef = ref(storage, file.name);
+        // upload to file under userID
+        const storageRef = ref(storage, userID + '/' + file.name);
 
         const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -45,11 +46,22 @@ export const useAddItem = (): any => {
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
         uploadTask.on('state_changed',
-            (_) => {
-
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                    default:
+                        //do nothing
+                }
             },
-            (_) => {
-                // Handle unsuccessful uploads
+            (error) => {
+                console.log("picture failed to upload")
             },
             () => {
                 // Handle successful uploads on complete
@@ -70,26 +82,14 @@ export const useAddItem = (): any => {
                         dateAcquired,
                         inCollection,
                         createdAt: serverTimestamp()
-                    })
+                    }).then(async (res) => 
+                        await updateDoc((doc(db, "items", res.id)), {
+                            id: res.id
+                        })
+                    )
                 );
             }
         );
-
-
-        // await addDoc(itemCollectionRef, {
-        //     userID,
-        //     itemName,
-        //     downloadUrl,
-        //     description,
-        //     type,
-        //     brandOrCreator,
-        //     price,
-        //     series,
-        //     character,
-        //     dateAcquired,
-        //     inCollection,
-        //     createdAt: serverTimestamp()
-        // });
     };
 
     return { addItem };

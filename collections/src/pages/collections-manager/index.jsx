@@ -8,15 +8,12 @@ import "./styles.css";
 import { useAddItem } from '../../hooks/useAddItem';
 import { useGetItems } from '../../hooks/useGetItems';
 import { useGetUserID } from '../../hooks/useGetUserID';
+import { useDeleteItem } from '../../hooks/useDeleteItem';
 
 export const Collections = () => {
-    const { addItem } = useAddItem();
-    const { items, totalItems } = useGetItems();
-    const { name, profilePhoto, userID } = useGetUserID();
-    const navigate = useNavigate();
-
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
+    const [itemID, setDeleteItemID] = useState(null);
     const [itemName, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
@@ -26,6 +23,12 @@ export const Collections = () => {
     const [character, setCharacter] = useState("");
     const [dateAcquired, setDateAcquired] = useState(null);
     const [inCollection, setInCollection] = useState("yes");
+
+    const { addItem } = useAddItem();
+    const { items, totalItems } = useGetItems();
+    const { name, profilePhoto, userID } = useGetUserID();
+    const navigate = useNavigate();
+    const { deleteItem } = useDeleteItem(itemID);
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -54,6 +57,12 @@ export const Collections = () => {
         setCharacter("");
         setDateAcquired(null);
         setInCollection("yes");
+
+        // need some sort of form error handling
+        if (error) {
+            console.error(error);
+        }
+            
     };
 
     const signUserOut = async () => {
@@ -163,6 +172,7 @@ export const Collections = () => {
                         <br></br>
                         <button type="submit">Add Item</button>
                     </form>
+                    
                     <br></br>
                     {profilePhoto && <div className="profile">
                         <img className="profile-photo" src={profilePhoto} alt="user's profile" />
@@ -172,8 +182,9 @@ export const Collections = () => {
                         </button>
                     </div>}
                 </div>
+
                 <div className="items">
-                    <h2>All {totalItems} Items</h2>
+                    <h2>All { totalItems } Items</h2>
                     <ul>
                         {items.map((item) => {
                             const { itemName, description, type, brandOrCreator, price, series, character, dateAcquired, inCollection } = item;
@@ -188,6 +199,10 @@ export const Collections = () => {
                                     <p> character: {character} </p>
                                     <p> date acquired: {dateAcquired} </p>
                                     <p> still in collection: {inCollection} </p>
+                                    <button className="delete-item" type="button" onClick={() => {
+                                        setDeleteItemID(item.id);
+                                        deleteItem();
+                                    }}> Delete Item</button>
                                 </li>
                             )
                         })}
