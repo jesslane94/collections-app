@@ -13,7 +13,7 @@ import { useDeleteItem } from '../../hooks/useDeleteItem';
 export const Collections = () => {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
-    const [itemID, setDeleteItemID] = useState(null);
+    const [item, setDeleteItem] = useState(null);
     const [itemName, setName] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
@@ -28,7 +28,7 @@ export const Collections = () => {
     const { items, totalItems } = useGetItems();
     const { name, profilePhoto, userID } = useGetUserID();
     const navigate = useNavigate();
-    const { deleteItem } = useDeleteItem(itemID);
+    const { deleteItem } = useDeleteItem(item);
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -78,6 +78,14 @@ export const Collections = () => {
     return (
         <>
             <div className="collections">
+            <br></br>
+                    {profilePhoto && <div className="profile">
+                        <img className="profile-photo" src={profilePhoto} alt="user's profile" />
+                        <br></br>
+                        <button className="sign-out-button" onClick={signUserOut}>
+                            Sign Out
+                        </button>
+                    </div>}
                 <div className="container">
                     <h1>{name}'s Collection</h1>
                     <div className="item">
@@ -173,14 +181,6 @@ export const Collections = () => {
                         <button type="submit">Add Item</button>
                     </form>
                     
-                    <br></br>
-                    {profilePhoto && <div className="profile">
-                        <img className="profile-photo" src={profilePhoto} alt="user's profile" />
-                        <br></br>
-                        <button className="sign-out-button" onClick={signUserOut}>
-                            Sign Out
-                        </button>
-                    </div>}
                 </div>
 
                 <div className="items">
@@ -189,8 +189,9 @@ export const Collections = () => {
                         {items.map((item) => {
                             const { itemName, description, type, brandOrCreator, price, series, character, dateAcquired, inCollection } = item;
                             return (
-                                <li key={item.id}>
-                                    <h4> {itemName} </h4>
+                                <div className="card" key={item.id}>
+                                    <div className="card-header"> {itemName} </div>
+                                    <div className="card-body">
                                     <p> description: {description} </p>
                                     <p> type: {type} </p>
                                     <p> brand/creator: {brandOrCreator} </p>
@@ -200,10 +201,11 @@ export const Collections = () => {
                                     <p> date acquired: {dateAcquired} </p>
                                     <p> still in collection: {inCollection} </p>
                                     <button className="delete-item" type="button" onClick={() => {
-                                        setDeleteItemID(item.id);
+                                        setDeleteItem(item);
                                         deleteItem();
                                     }}> Delete Item</button>
-                                </li>
+                                    </div>
+                                </div>
                             )
                         })}
                     </ul>

@@ -1,4 +1,4 @@
-.items {
+/* .items {
   margin-left: 650px;
   margin-top: 20px;
   padding-left: 10px;
@@ -6,4 +6,20 @@
   height: 400px;
   overflow: auto;
   border: 3px solid #023047;
+} */
+
+.card {
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 20px;
+}
+
+.card-header {
+  color: rgb(48, 39, 56);
+  background-color: rgb(227, 230, 230);
+  font-weight: bold;
+}
+
+.profile {
+  display: block;
 }
