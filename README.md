@@ -22,8 +22,8 @@ and to see everything you own in one spot! You can also make note of each items 
 ### task list
 
 - [x] add delete functionality
-- [in progress] add update functionality
-- [ongoing] make UI prettier
+- [ ] in progress - add update functionality
+- [ ] ongoing - make UI prettier
 - [ ] add search functionality
 - [ ] add ability to customize fields
 - [ ] add multiple collections ability?
