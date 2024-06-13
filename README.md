@@ -13,13 +13,13 @@ and to see everything you own in one spot! You can also make note of each items 
 - update and delete items already in the database
 - dynamic population of items
 
-# running locally
+### running locally
 
 1. clone repo locally
 2. add config file to src with your firebase information (API key, etc). refer to their documents for help!
 3. run npm start on the command line
 
-# task list
+### task list
 
 - [x] add delete functionality
 - [in progress] add update functionality
