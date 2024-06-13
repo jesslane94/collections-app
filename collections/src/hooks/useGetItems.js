@@ -1,47 +1,54 @@
-import { useEffect, useState } from "react";
-import { query, collection, where, orderBy, onSnapshot } from "firebase/firestore";
-import { db } from "../config/firebase-config";
-import { useGetUserID } from './useGetUserID';
+import { useEffect, useState } from 'react'
+import {
+  query,
+  collection,
+  where,
+  orderBy,
+  onSnapshot
+} from 'firebase/firestore'
+import { db } from '../config/firebase-config'
+import { useGetUserID } from './useGetUserID'
 
 export const useGetItems = () => {
-    const [ items, setItems ] = useState([]);
-    const [ totalItems, setTotalItems ] = useState(0)
-    const { userID } = useGetUserID();
+  const [items, setItems] = useState([])
+  const [totalItems, setTotalItems] = useState(0)
+  const { userID } = useGetUserID()
 
-    const itemCollection = collection(db, "items");
-    
-    const getItems = async () => {
-        let unsubscribe;
-        try {
-            const queryItems = query(itemCollection, 
-                where("userID", "==", userID),
-                orderBy("createdAt")
-            );
+  const itemCollection = collection(db, 'items')
 
-            unsubscribe = onSnapshot(queryItems, (snapshot) => {
-                let docs = [];
-                let totalItems = 0;
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const id = doc.id;
+  const getItems = async () => {
+    let unsubscribe
+    try {
+      const queryItems = query(
+        itemCollection,
+        where('userID', '==', userID),
+        orderBy('createdAt')
+      )
 
-                    docs.push({...data, id});
-                    totalItems = totalItems + 1;
-                });
+      unsubscribe = onSnapshot(queryItems, snapshot => {
+        let docs = []
+        let totalItems = 0
+        snapshot.forEach(doc => {
+          const data = doc.data()
+          const id = doc.id
 
-                setItems(docs);
-                setTotalItems(totalItems);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+          docs.push({ ...data, id })
+          totalItems = totalItems + 1
+        })
 
-        return () => unsubscribe();
-    };
+        setItems(docs)
+        setTotalItems(totalItems)
+      })
+    } catch (err) {
+      console.error(err)
+    }
 
-    useEffect(() => {
-        getItems();
-    });
+    return () => unsubscribe()
+  }
 
-    return { items, totalItems };
+  useEffect(() => {
+    getItems()
+  })
+
+  return { items, totalItems }
 }

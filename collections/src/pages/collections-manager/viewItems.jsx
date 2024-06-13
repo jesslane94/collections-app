@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGetItems } from '../../hooks/useGetItems'
 import { useDeleteItem } from '../../hooks/useDeleteItem'
 import { useGetUserID } from '../../hooks/useGetUserID'
+import { useNavigate } from 'react-router-dom'
 
 import './styles.css'
 
@@ -11,6 +12,7 @@ export const ViewItems = () => {
   const { name } = useGetUserID()
   const { items, totalItems } = useGetItems()
   const { deleteItem } = useDeleteItem(item)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -52,6 +54,16 @@ export const ViewItems = () => {
                   <p> character: {character} </p>
                   <p> date acquired: {dateAcquired} </p>
                   <p> still in collection: {inCollection} </p>
+                  <button
+                    className='update-item'
+                    type='button'
+                    onClick={() => {
+                      navigate('/updateItem')
+                    }}
+                  >
+                    {' '}
+                    Delete Item
+                  </button>
                   <button
                     className='delete-item'
                     type='button'
