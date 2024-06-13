@@ -4,6 +4,7 @@
 
 This web app was created for keeping track of a collection of items you own. Its intended use is for organization/productivity, to help prevent duplicate buying of products,
 and to see everything you own in one spot! You can also make note of each items characteristics at time of ownership.
+
 **LIVE LINK**: https://collections-90baf.web.app/
 
 ## Features
