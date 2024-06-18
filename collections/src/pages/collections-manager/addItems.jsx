@@ -1,33 +1,59 @@
 import { useState } from 'react'
-import { useUpdateItem } from '../../hooks/useUpdateItem'
-import { useParams } from 'react-router-dom'
+import { useAddItem } from '../../hooks/useAddItem'
+import { useGetUserID } from '../../hooks/useGetUserID'
 
 import './styles.css'
 
-export const UpdateItems = () => {
+export const AddItems = () => {
   const [file, setFile] = useState(null)
   const [error, setError] = useState(null)
+  const [itemName, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [type, setType] = useState('')
+  const [brandOrCreator, setBrandOrCreator] = useState('')
+  const [price, setPrice] = useState('')
+  const [series, setSeries] = useState('')
+  const [character, setCharacter] = useState('')
+  const [dateAcquired, setDateAcquired] = useState(null)
+  const [inCollection, setInCollection] = useState('yes')
   const [message, setMessage] = useState('')
-  var data = {}
-  const { updateItem } = useUpdateItem(data)
+
+  const { addItem } = useAddItem()
+  const { userID } = useGetUserID()
 
   const types = ['image/png', 'image/jpeg', 'image/jpg']
-  const { id } = useParams()
 
   const onSubmit = e => {
     e.preventDefault()
-
-    if (file != null) {
-      data.file = file
-    }
-    data.id = id
-
-    updateItem(data)
+    addItem({
+      userID,
+      itemName,
+      file,
+      description,
+      type,
+      brandOrCreator,
+      price,
+      series,
+      character,
+      dateAcquired,
+      inCollection
+    })
       .then(() => {
-        setMessage('Item Updated Successfully!')
+        setName('')
+        setDescription('')
+        setType('')
+        setBrandOrCreator('')
+        setPrice(0)
+        setSeries('')
+        setCharacter('')
+        setDateAcquired(null)
+        setInCollection('yes')
+
+        setMessage('Item Uploaded Successfully!')
       })
       .catch(error => {
-        setMessage('there was an error while udpating.')
+        setMessage('An error has occurred while uploading.')
+        console.error(error)
       })
 
     // file error handling
@@ -46,12 +72,13 @@ export const UpdateItems = () => {
             <p></p>
           </div>
           <div className='item'>
-            <h1>Update Item</h1>
+            <h1>Add an Item</h1>
           </div>
-          <form className='update-item' onSubmit={onSubmit}>
+          <form className='add-item' onSubmit={onSubmit}>
             <p></p>
             <input
               type='file'
+              required
               onChange={e => {
                 let selectedFile = e.target.files[0]
                 if (selectedFile) {
@@ -69,49 +96,59 @@ export const UpdateItems = () => {
             <input
               type='text'
               placeholder='Item Name'
-              onChange={e => (data.name = e.target.value)}
+              required
+              value={itemName}
+              onChange={e => setName(e.target.value)}
             />
             <p></p>
             <input
               type='text'
               placeholder='Description'
-              onChange={e => (data.description = e.target.value)}
+              required
+              value={description}
+              onChange={e => setDescription(e.target.value)}
             />
             <p></p>
             <input
               type='text'
               placeholder='Type'
-              onChange={e => (data.type = e.target.value)}
+              value={type}
+              onChange={e => setType(e.target.value)}
             />
             <p></p>
             <input
               type='text'
               placeholder='Brand or Creator'
-              onChange={e => (data.brandOrCreator = e.target.value)}
+              value={brandOrCreator}
+              onChange={e => setBrandOrCreator(e.target.value)}
             />
             <p></p>
             <input
               type='number'
               placeholder='Price'
-              onChange={e => (data.price = e.target.value)}
+              value={price}
+              onChange={e => setPrice(e.target.value)}
             />
             <p></p>
             <input
               type='text'
               placeholder='Series'
-              onChange={e => (data.series = e.target.value)}
+              value={series}
+              onChange={e => setSeries(e.target.value)}
             />
             <p></p>
             <input
               type='text'
               placeholder='Character'
-              onChange={e => (data.character = e.target.value)}
+              value={character}
+              onChange={e => setCharacter(e.target.value)}
             />
             <p></p>
             <input
               type='date'
               placeholder='Date Acquired'
-              onChange={e => (data.dateAcquired = e.target.value)}
+              value={dateAcquired}
+              onChange={e => setDateAcquired(e.target.value)}
             />
             <p></p>
             In Collection:
@@ -121,7 +158,7 @@ export const UpdateItems = () => {
                 name='inCollectionRadio'
                 value='yes'
                 defaultChecked={true}
-                onChange={e => (data.inCollection = e.target.value)}
+                onChange={e => setInCollection(e.target.value)}
               />
               Yes
             </label>
@@ -130,12 +167,12 @@ export const UpdateItems = () => {
                 type='radio'
                 name='inCollectionRadio'
                 value='no'
-                onChange={e => (data.inCollection = e.target.value)}
+                onChange={e => setInCollection(e.target.value)}
               />
               No
             </label>
             <p></p>
-            <button type='submit'>Update Item</button>
+            <button type='submit'>Add Item</button>
           </form>
         </div>
       </div>

@@ -1,3 +1,11 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family:
+    sans-serif;
+}
+
 .card {
   margin-bottom: 10px;
   display: inline-block;
@@ -17,4 +25,11 @@
 .picture {
   height: 200px;
   width: 200px;
+}
+
+.result {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #409743;
 }

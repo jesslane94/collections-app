@@ -8,8 +8,8 @@ export const Navbar = () => {
       className='navbar navbar-expand-lg bg-dark border-bottom border-body'
       data-bs-theme='dark'
     >
-      <div class='container-fluid'>
-        <a class='navbar-brand' href='/'>
+      <div className='container-fluid'>
+        <a className='navbar-brand' href='/collections'>
           Home
         </a>
         <button
@@ -25,7 +25,7 @@ export const Navbar = () => {
         </button>
         <div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
           <div className='navbar-nav'>
-            <a className='nav-link' href='/collections'>
+            <a className='nav-link' href='/addItems'>
               Add an Item
             </a>
             <a className='nav-link' href='/viewItems'>

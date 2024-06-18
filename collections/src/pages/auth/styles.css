@@ -1,0 +1,31 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family:
+    sans-serif;
+}
+
+.login-page {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+.login-google-button {
+    background-color: #65d4ac; /* Green */
+    transition-duration: 0.4s;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  .login-google-button:hover {
+    background-color: #65d4ac; /* Green */
+    color: white;
+  }

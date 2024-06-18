@@ -1,4 +1,4 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import { useGetItems } from '../../hooks/useGetItems'
 import { useDeleteItem } from '../../hooks/useDeleteItem'
 import { useGetUserID } from '../../hooks/useGetUserID'
@@ -7,18 +7,22 @@ import { useNavigate } from 'react-router-dom'
 import './styles.css'
 
 export const ViewItems = () => {
-  const [item, setDeleteItem] = useState(null)
+  // const [item, setDeleteItem] = useState(null)
 
   const { name } = useGetUserID()
   const { items, totalItems } = useGetItems()
-  const { deleteItem } = useDeleteItem(item)
+  const { deleteItem, message } = useDeleteItem()
   const navigate = useNavigate()
 
   return (
     <>
       <div className='items'>
         <h1>{name}'s Collection</h1>
-        <h2>All {totalItems} Items</h2>
+        <h2>Showing {totalItems} Items</h2>
+        <div className='result'>
+          <h2>{message}</h2>
+          <p></p>
+        </div>
         <ul>
           {items.map(item => {
             const {
@@ -58,18 +62,21 @@ export const ViewItems = () => {
                     className='update-item'
                     type='button'
                     onClick={() => {
-                      navigate('/updateItem')
+                      navigate(`/updateItem/${item.id}`, {
+                        state: { id: item.id }
+                      })
                     }}
                   >
                     {' '}
-                    Delete Item
+                    Update Item
                   </button>
                   <button
                     className='delete-item'
                     type='button'
                     onClick={() => {
-                      setDeleteItem(item)
-                      deleteItem()
+                      //setDeleteItem(item)
+                      console.log(item)
+                      deleteItem(item)
                     }}
                   >
                     {' '}
