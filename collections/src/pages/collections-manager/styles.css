@@ -33,3 +33,7 @@ body {
   font-weight: bold;
   color: #409743;
 }
+
+input[name="inCollectionRadio"] {
+  margin: 10px;
+}

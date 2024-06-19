@@ -73,6 +73,7 @@ export const AddItems = () => {
           </div>
           <div className='item'>
             <h1>Add an Item</h1>
+            <h3> *Picture, Item Name, and Description are REQUIRED!* </h3>
           </div>
           <form className='add-item' onSubmit={onSubmit}>
             <p></p>

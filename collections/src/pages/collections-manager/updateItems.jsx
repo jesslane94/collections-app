@@ -5,21 +5,16 @@ import { useParams } from 'react-router-dom'
 import './styles.css'
 
 export const UpdateItems = () => {
-  const [file, setFile] = useState(null)
-  const [error, setError] = useState(null)
   const [message, setMessage] = useState('')
   var data = {}
   const { updateItem } = useUpdateItem(data)
 
-  const types = ['image/png', 'image/jpeg', 'image/jpg']
   const { id } = useParams()
 
   const onSubmit = e => {
     e.preventDefault()
 
-    if (file != null) {
-      data.file = file
-    }
+    // if file, set file in data.
     data.id = id
 
     updateItem(data)
@@ -29,13 +24,9 @@ export const UpdateItems = () => {
       .catch(error => {
         setMessage('there was an error while udpating.')
       })
-
-    // file error handling
-    if (error) {
-      console.error(error)
-    }
   }
 
+  //need to add file update functinality!
   return (
     <>
       <div className='collections'>
@@ -51,25 +42,9 @@ export const UpdateItems = () => {
           <form className='update-item' onSubmit={onSubmit}>
             <p></p>
             <input
-              type='file'
-              onChange={e => {
-                let selectedFile = e.target.files[0]
-                if (selectedFile) {
-                  if (types.includes(selectedFile.type)) {
-                    setError(null)
-                    setFile(selectedFile)
-                  } else {
-                    setFile(null)
-                    setError('Please select an image file (png or jpg)')
-                  }
-                }
-              }}
-            />
-            <p></p>
-            <input
               type='text'
               placeholder='Item Name'
-              onChange={e => (data.name = e.target.value)}
+              onChange={e => (data.itemName = e.target.value)}
             />
             <p></p>
             <input

@@ -8,8 +8,6 @@ export const useUpdateItem = data => {
     // if picture, need to reupload
     // update only changed fields?
     const itemRef = doc(db, 'items', data.id)
-    console.log('in update')
-    console.log(data)
     await updateDoc(itemRef, data)
   }
 
