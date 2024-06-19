@@ -7,5 +7,6 @@
     "collections-90baf": {
       "extensionInstances": {}
     }
-  }
+  },
+  "dataconnectEmulatorConfig": {}
 }

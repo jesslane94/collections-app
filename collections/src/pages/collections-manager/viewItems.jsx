@@ -1,4 +1,3 @@
-//import { useState } from 'react'
 import { useGetItems } from '../../hooks/useGetItems'
 import { useDeleteItem } from '../../hooks/useDeleteItem'
 import { useGetUserID } from '../../hooks/useGetUserID'
@@ -7,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import './styles.css'
 
 export const ViewItems = () => {
-  // const [item, setDeleteItem] = useState(null)
-
   const { name } = useGetUserID()
   const { items, totalItems } = useGetItems()
   const { deleteItem, message } = useDeleteItem()
@@ -74,8 +71,6 @@ export const ViewItems = () => {
                     className='delete-item'
                     type='button'
                     onClick={() => {
-                      //setDeleteItem(item)
-                      console.log(item)
                       deleteItem(item)
                     }}
                   >
