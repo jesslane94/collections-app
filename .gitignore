@@ -67,3 +67,6 @@ collections/node_modules/
 
 #config files
 collections/src/config/
+
+#build folder
+build
