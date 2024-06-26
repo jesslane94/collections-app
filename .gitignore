@@ -70,3 +70,7 @@ collections/src/config/
 
 #build folder
 build
+
+#github workflows
+.github
+
