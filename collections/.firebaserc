@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "collections-90baf"
+  },
+  "targets": {},
+  "etags": {
+    "collections-90baf": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}
