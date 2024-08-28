@@ -7,7 +7,7 @@ import { Collections } from './pages/collections-manager/index'
 import { ViewItems } from './pages/collections-manager/viewItems'
 import { UpdateItems } from './pages/collections-manager/updateItems'
 import { AddItems } from './pages/collections-manager/addItems'
-import { Navbar } from './Navbar.js'
+import { Navbar } from './components/Navbar.js'
 
 function App () {
   return (

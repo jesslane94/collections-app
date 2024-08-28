@@ -1,18 +1,26 @@
-// UNDER CONSTRUCTION - idea is to use this to get a specific item's info in order to prepopulate the update link
-// with the previous information.
-
-/* import { useEffect, useState } from 'react'
-import {
-  query,
-  collection,
-  where,
-  orderBy,
-  onSnapshot
-} from 'firebase/firestore'
+// import { useState } from 'react'
+import { query, collection, where, getDocs } from 'firebase/firestore'
 import { db } from '../config/firebase-config'
+import { useGetUserID } from './useGetUserID'
 
-export const useGetOneItem = () => {
+export const useGetOneItem = itemId => {
+  const { userID } = useGetUserID()
   const itemCollection = collection(db, 'items')
 
-  const getOneItem = async id => {}
-} */
+  const getOneItem = async id => {
+    var itemData = {}
+    const q = query(
+      itemCollection,
+      where('id', '==', itemId),
+      where('userID', '==', userID)
+    )
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach(doc => {
+      const data = doc.data()
+      itemData = { ...data, id }
+    })
+    return itemData
+  }
+
+  return { getOneItem }
+}

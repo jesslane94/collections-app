@@ -41,7 +41,7 @@ export const ViewItems = () => {
                     {' '}
                     <a href={item.downloadUrl}>
                       <img
-                        class='picture'
+                        className='picture'
                         src={item.downloadUrl}
                         alt='an item added to the database'
                       />

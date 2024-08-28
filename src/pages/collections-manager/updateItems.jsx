@@ -1,15 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useUpdateItem } from '../../hooks/useUpdateItem'
+// import { useGetOneItem } from '../../hooks/useGetOneItem'
 import { useParams } from 'react-router-dom'
+
+import { query, collection, where, getDocs } from 'firebase/firestore'
+import { db } from '../../config/firebase-config'
+import { useGetUserID } from '../../hooks/useGetUserID'
 
 import './styles.css'
 
 export const UpdateItems = () => {
   const [message, setMessage] = useState('')
+  const [currentData, setCurrentData] = useState([])
+
   var data = {}
   const { updateItem } = useUpdateItem(data)
-
   const { id } = useParams()
+  // const { getOneItem } = useGetOneItem(id)
+
+  // getOneItem(id).then(data => setCurrentData(data))
+  const { userID } = useGetUserID()
+  useEffect(() => {
+    const itemCollection = collection(db, 'items')
+    var itemData = {}
+    const q = query(
+      itemCollection,
+      where('id', '==', id),
+      where('userID', '==', userID)
+    )
+    const querySnapshot = async () => {
+      await getDocs(q).then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const data = doc.data()
+          itemData = { ...data, id }
+        })
+      })
+    }
+    querySnapshot().then(data => setCurrentData(itemData))
+  }, [id, userID])
+
+  console.log(currentData)
 
   const onSubmit = e => {
     e.preventDefault()
@@ -43,7 +73,7 @@ export const UpdateItems = () => {
             <p></p>
             <input
               type='text'
-              placeholder='Item Name'
+              placeholder={currentData.itemName || 'Item Name'}
               onChange={e => (data.itemName = e.target.value)}
             />
             <p></p>
