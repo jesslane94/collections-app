@@ -38,6 +38,7 @@ and to see everything you own in one spot! You can also make note of each items 
 - [x] add delete functionality
 - [x] add update functionality
 - [x] have update fields autopopulate with previous information
+- [ ] add/update photos
 - [ ] make all fields optional besides name?
 - [ ] add search/filter functionality
 - [ ] ongoing - make UI prettier
