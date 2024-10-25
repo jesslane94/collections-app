@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useUpdateItem } from '../../hooks/useUpdateItem'
-// import { useGetOneItem } from '../../hooks/useGetOneItem'
 import { useParams } from 'react-router-dom'
 
 import { query, collection, where, getDocs } from 'firebase/firestore'
@@ -12,14 +11,17 @@ import './styles.css'
 export const UpdateItems = () => {
   const [message, setMessage] = useState('')
   const [currentData, setCurrentData] = useState([])
+  const [error, setError] = useState(null)
+  const [file, setFile] = useState(null)
 
   var data = {}
-  const { updateItem } = useUpdateItem(data)
+  const { updateItem } = useUpdateItem(data, file)
   const { id } = useParams()
-  // const { getOneItem } = useGetOneItem(id)
-
-  // getOneItem(id).then(data => setCurrentData(data))
   const { userID } = useGetUserID()
+
+  const types = ['image/png', 'image/jpeg', 'image/jpg']
+
+  // get data to set already existing values in form as placeholders
   useEffect(() => {
     const itemCollection = collection(db, 'items')
     var itemData = {}
@@ -44,19 +46,23 @@ export const UpdateItems = () => {
   const onSubmit = e => {
     e.preventDefault()
 
-    // if file, set file in data.
     data.id = id
 
-    updateItem(data)
+    // file error handling
+    if (error) {
+      setMessage('Please upload an image file in png or jpg format.')
+    }
+    else {
+      updateItem(data, file)
       .then(() => {
         setMessage('Item Updated Successfully!')
       })
       .catch(error => {
-        setMessage('there was an error while udpating.')
+        setMessage('There was an error while updating.')
       })
+    }
   }
 
-  //need to add file update functinality!
   return (
     <>
       <div className='collections'>
@@ -70,6 +76,22 @@ export const UpdateItems = () => {
             <h1>Update Item</h1>
           </div>
           <form className='update-item' onSubmit={onSubmit}>
+          <p></p>
+            <input
+              type='file'
+              onChange={e => {
+                let selectedFile = e.target.files[0]
+                if (selectedFile) {
+                  if (types.includes(selectedFile.type)) {
+                    setError(null)
+                    setFile(selectedFile)
+                  } else {
+                    setFile(null)
+                    setError('Please select an image file (png or jpg)')
+                  }
+                }
+              }}
+            />
             <p></p>
             <input
               type='text'
@@ -79,43 +101,43 @@ export const UpdateItems = () => {
             <p></p>
             <input
               type='text'
-              placeholder='Description'
+              placeholder={currentData.description || 'Description'}
               onChange={e => (data.description = e.target.value)}
             />
             <p></p>
             <input
               type='text'
-              placeholder='Type'
+              placeholder={currentData.type || 'Type'}
               onChange={e => (data.type = e.target.value)}
             />
             <p></p>
             <input
               type='text'
-              placeholder='Brand or Creator'
+              placeholder={currentData.brandOrCreator || 'Brand or Creator'}
               onChange={e => (data.brandOrCreator = e.target.value)}
             />
             <p></p>
             <input
               type='number'
-              placeholder='Price'
+              placeholder={currentData.price || 'Price'}
               onChange={e => (data.price = e.target.value)}
             />
             <p></p>
             <input
               type='text'
-              placeholder='Series'
+              placeholder={currentData.series || 'Series'}
               onChange={e => (data.series = e.target.value)}
             />
             <p></p>
             <input
               type='text'
-              placeholder='Character'
+              placeholder={currentData.character || 'Character'}
               onChange={e => (data.character = e.target.value)}
             />
             <p></p>
             <input
               type='date'
-              placeholder='Date Acquired'
+              placeholder={currentData.dateAcquired || 'Date Acquired'}
               onChange={e => (data.dateAcquired = e.target.value)}
             />
             <p></p>
@@ -125,7 +147,7 @@ export const UpdateItems = () => {
                 type='radio'
                 name='inCollectionRadio'
                 value='yes'
-                defaultChecked={true}
+                defaultChecked={currentData.inCollection || true}
                 onChange={e => (data.inCollection = e.target.value)}
               />
               Yes

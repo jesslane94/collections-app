@@ -5,6 +5,7 @@ import { useGetUserID } from '../../hooks/useGetUserID'
 import './styles.css'
 
 export const AddItems = () => {
+  // setting document fields
   const [file, setFile] = useState(null)
   const [error, setError] = useState(null)
   const [itemName, setName] = useState('')

@@ -1,4 +1,6 @@
-//using bootstrap boilerplate
+/*
+using bootstrap boilerplate
+*/
 
 import React from 'react'
 

@@ -9,6 +9,10 @@ import { UpdateItems } from './pages/collections-manager/updateItems'
 import { AddItems } from './pages/collections-manager/addItems'
 import { Navbar } from './components/Navbar.js'
 
+/*
+routing to specific pages. persistent nav bar
+*/
+
 function App () {
   return (
     <div className='App'>

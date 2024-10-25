@@ -38,13 +38,14 @@ and to see everything you own in one spot! You can also make note of each items 
 - [x] add delete functionality
 - [x] add update functionality
 - [x] have update fields autopopulate with previous information
-- [ ] add/update photos
+- [x] add/update photos
 - [ ] make all fields optional besides name?
 - [ ] add search/filter functionality
+- [ ] ongoing - testing
 - [ ] ongoing - make UI prettier
 
 ### stretch goals
 
 - [ ] adding multiple photos
-- [ ] add ability to customize fields?
+- [ ] add ability to (add, delete) fields?
 - [ ] add multiple collections ability?
